@@ -1,0 +1,43 @@
+<footer>
+    <div class="container">
+        <p>Handcrafted with <i class="icon icon-heart"></i> in Brazil.</p>
+        <p>Follow me on</p>
+        <a href="https://github.com/marianafranco" class="social"><i class="icon icon-github"></i> Github</a>
+        <a href="https://twitter.com/marianafranco" class="social"><i class="icon icon-twitter"></i> Twitter</a>
+	<!--
+        <a href="http://stackoverflow.com/users/1475346/chasmo" class="social"><i class="icon icon-stackexchange"></i> Stack Overflow</a>
+	-->
+    </div>
+</footer>
+
+<a class="top" href="#">Top <i class="icon-angle-up"></i></a>
+
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+<script src="/js/headroom.min.js"></script>
+<script src="/js/headroom.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+    var headroomHeader = new Headroom(document.querySelector("header"), {
+        "tolerance": 30,
+        "offset": 80,
+        "classes": {
+            "initial": "animated",
+            "pinned": "bounceInDown",
+            "unpinned": "bounceOutUp"
+        }
+    });
+    headroomHeader.init();
+
+    var headroomTop = new Headroom(document.querySelector("a.top"), {
+        "tolerance": 30,
+        "offset": 80,
+        "classes": {
+            "initial": "animated",
+            "pinned": "bounceInUp",
+            "unpinned": "bounceOutDown"
+        }
+    });
+    headroomTop.init();
+</script>
+</body>
+</html>

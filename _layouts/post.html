@@ -1,0 +1,20 @@
+---
+layout: blog
+---
+
+<article class="container">
+    <header>
+        <hgroup>
+            <h1>{{ page.title}}</h1>
+        </hgroup>
+        <time datetime="{{ page.date | date: '%Y-%m-%d' }}"><i class="icon-calendar-empty"></i>{{ page.date | date: "%A, %-d. %B %Y" }}</time>
+    </header>
+    {{ content | replace: '-&gt;', '<i class="icon-long-arrow-right"></i>' | replace: '&lt;-', '<i class="icon-long-arrow-left"></i>' | replace: '&gt;', '<i class="icon-angle-right"></i>' | replace: '&lt;', '<i class="icon-angle-left"></i>' | replace: '^2', '&sup2;' }}
+    <footer>
+        <ul class="tags">
+            {% for tag in page.tags %}
+            <li class="tag">{{ tag }}</li>
+            {% endfor %}
+        </ul>
+    </footer>
+</article>
