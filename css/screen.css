@@ -257,6 +257,28 @@ table td{
 	clear:both
 }
 
+.proj-item{
+	margin-bottom:15px;
+	margin-bottom:1.5rem;
+	overflow:hidden
+}
+
+.proj-item img{
+	max-width:30%;
+	float:left;
+	vertical-align:middle
+}
+
+.proj-item .proj-details{
+	width:65%;
+	float:left;
+	padding-left:10px
+}
+
+.proj-details li{
+	padding-left:30px
+}
+
 body{
 	overflow-y:scroll;
 	padding-top:125px;
