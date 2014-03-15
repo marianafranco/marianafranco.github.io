@@ -1,5 +1,14 @@
 name: Mariana Franco
 subname: Software Engineer
+
 markdown: redcarpet
 pygments: true
 excerpt_separator: <!--more-->
+
+# Permalinks
+permalink: pretty
+
+# This is the list of pages to incldue in the header of the website.
+pages_list:       
+  About: '/'
+  Projects: '/projects/'

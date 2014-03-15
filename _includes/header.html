@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{ page.title }}</title>
+    <title>{{ page.title }} | {{ site.name }}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="cleartype" content="on">
 
@@ -55,8 +55,9 @@
                 </div>
             </div>
             <div class="blog-pages">
-                  <a href="/">About</a>
-		  <a href="/">Projects</a>
+                  {% for page in site.pages_list %}
+                      <a href="{{ page[1]  }}">{{ page[0] }}</a>
+                  {% endfor %}
             </div>
         </div>
     </div>

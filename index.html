@@ -1,6 +1,7 @@
 ---
-layout: blog
-title: Mariana Franco
+layout: page
+title: Index
 ---
 
-
+{% capture about %}{% include about.md %}{% endcapture %}
+{{ about | markdownify }}
