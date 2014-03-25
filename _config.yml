@@ -10,5 +10,5 @@ permalink: pretty
 
 # This is the list of pages to incldue in the header of the website.
 pages_list:       
-  About: '/'
+  About: '/about/'
   Projects: '/projects/'
