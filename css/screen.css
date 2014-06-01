@@ -442,8 +442,8 @@ body>footer p,body>footer a{
 }
 
 ul.post-list{
-	list-style:none;p
-	adding:0
+	list-style:none;
+	padding:0
 }
 
 ul.post-list li{
