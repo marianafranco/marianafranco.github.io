@@ -5,7 +5,7 @@ date:   2014-05-30 22:45:00
 tags: xmodmap linux
 ---
 
-Some weeks ago, my laptop `k` key just stopped to work. By chance, the `k` letter is not used to much in Portuguese and I could wait some days to see whether it returns to live or not. With its death declared, I started looking for some ways of mapping another key to the `k` key in Ubuntu, when I found about the `xmodmap` utility.
+Some weeks ago, my laptop `k` key just stopped to work. By chance, the `k` letter is not used to much in Portuguese and I could wait some days to see whether it returns to life or not. With its death declared, I started looking for some ways of mapping another key to the `k` key in Ubuntu, when I found about the `xmodmap` utility.
 
 <!--more-->
 
