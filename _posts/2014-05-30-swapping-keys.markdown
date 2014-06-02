@@ -41,7 +41,7 @@ Therefore, the above example indicates that the keycode 44 is mapped to the lowe
 
 ### 2. AltGr keycode
 
-Looking to the keymap table I could not identity any keycode mapped to the `AltGr` key, so I used the `xev` command to find the keycode that correspond to the `AltGr` key in my laptop.
+Looking to the keymap table I could not identify any keycode mapped to the `AltGr` key, so I used the `xev` command to find the keycode that correspond to the `AltGr` key in my laptop.
 
 The `xev` is a program that displays X events. For any key that you hit, the console where you started `xev` will display an event that includes the keycode for that key.
 
@@ -66,7 +66,7 @@ keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol
 
 ### 3. ISO\_Level3\_Shift vs Mode_switch
 
-I tried to change the keycode 44 to map the `AltGr` + `j` to the letter `k` trough the following command:
+I tried to change the keycode 44 to map the `AltGr` + `j` to the letter `k` through the following command:
 
 ``` bash
 $ xmodmap -e "keycode 44 = j J j J k k"
