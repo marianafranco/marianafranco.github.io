@@ -66,11 +66,12 @@ h2{
 }
 
 h3{
-	padding-top:15px
+	padding-top:10px;
+	padding-bottom:10px
 }
 
 p{
-	padding-bottom:5px
+	padding-bottom:20px
 }
 
 time{
@@ -83,7 +84,7 @@ time i{
 }
 
 time+p,article header+p{
-	padding-top:30px
+	padding-top:20px
 }
 
 a{
@@ -510,7 +511,7 @@ pre{
 	overflow-wrap:break-word;
 	word-wrap:normal;
 	white-space:pre-wrap;
-	padding-bottom:30px
+	padding-bottom:20px
 }
 
 .hljs{

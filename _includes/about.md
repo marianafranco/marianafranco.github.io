@@ -4,6 +4,5 @@ I'm a Software Engineer at [IBM](http://www.ibm.com/) Brazil Software Lab workin
 
 In 2009, I graduated in Computer Engineering at [Poli-USP](http://www.poli.usp.br/), Brazil, after finish my double degree exchange program with [Ecole des Mines de Saint-Etienne](http://www.emse.fr/), France.
 
-<br/>
 ### Contacts:
 <a href="https://github.com/marianafranco" class="social"><i class="icon icon-github"></i> Github</a>&nbsp;&nbsp;&nbsp;<a href="https://twitter.com/marianafranco" class="social"><i class="icon icon-twitter"></i> Twitter</a>&nbsp;&nbsp;&nbsp;<a href="http://www.linkedin.com/pub/mariana-ramos-franco/17/5a4/271" class="social"><i class="icon icon-linkedin"></i> LinkedIn</a>
