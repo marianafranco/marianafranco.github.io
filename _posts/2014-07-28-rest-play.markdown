@@ -1,0 +1,379 @@
+---
+layout: post
+title:  "Simple REST API with Play Framework"
+date:   2014-07-28 22:00:00
+tags: play-framework rest json java
+---
+
+Last month, I spend a Saturday night learning to use the [Play Framework](http://www.playframework.com/) which is a modern Java and Scala web application framework that has become increasingly famous due to its simplicity and good performance.
+
+<!--more-->
+
+Write REST applications in Play is very easy. So let's see how it works by creating a deliberately simple REST API to deal with a list of cars.
+
+## 1. Creating a new Play Project
+
+I installed Play through the [Typesafe Activator](http://typesafe.com/activator) following the instructions provided in this [link](http://www.playframework.com/documentation/2.3.x/Installing). After that, I created a new Play project called "rest-example" by typing:
+
+``` bash
+$ activator new rest-example
+```
+
+As shown below, after typing the command, the Play framework asks us whether we want to create a Scala or Java application. I chose the option 3 to create a Java application.
+
+``` bash
+Fetching the latest list of templates...
+
+Browse the list of templates: http://typesafe.com/activator/templates
+Choose from these featured templates or enter a template name:
+  1) minimal-java
+  2) minimal-scala
+  3) play-java
+  4) play-scala
+(hit tab to see a list of all templates)
+> 3
+OK, application "rest-example" is being created using the "play-java" template.
+```
+
+In the new created "rest-example" project, we see the following folders and files:
+
+- **app** : The application code like Java classes and HTML files.
+- **conf** : Configuration and routes definition files.
+- **project** : The build scripts.
+- **public** : Public files like images, CSS and javascripts.
+- **test** : The tests (JUnit or Selenium) file.
+
+Now you can launch the default application created by Play with the command:
+
+``` bash
+$ cd rest-example
+$ activator run
+
+[info] ...
+--- (Running the application from SBT, auto-reloading is enabled) ---
+[info] play - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+(Server started, use Ctrl+D to stop and go back to the console...)
+
+```
+
+When called by the first time this command will automatically download all dependencies, what can take a while. After that, you can access the application at [http://localhost:9000](http://localhost:9000).
+
+<p align="center">
+<img src="/img/play-defaul-app.png" width="300" height="165">
+</p>
+
+
+## 2. Modeling the Problem
+
+In this "rest-example" application, we will develop a simple REST API which allow users to query and post cars in a library. Each car will be identified by its model and manufacturer, and it's also possible to specify a list of attributes. The `Car` and `Attribute` class look like this:
+
+``` java
+package model;
+
+public class Car {
+	private String model;
+	private String manufacturer;
+	private List<Attribute> attributes;
+
+	// getters and setters
+}
+```
+
+``` java
+package model;
+
+public class Attribute {
+	private String name;
+	private String value;
+
+	// getters and setters	
+}
+```
+
+I put these classes inside the **app** folder, in a new package called **model**.
+
+## 3. Cache
+
+I didn't want to create a database for this simple "experiment" with Play. So instead I decided to use a cache in my application to load some initial cars from a JSON file and to store new data.
+
+The `cars.json` file looks like this:
+
+``` json
+
+[{	"manufacturer":"Volkswagen",
+	"model":"Gol",
+	"attributes":[
+		{"name":"color","value":"black"}
+	]},
+{	
+	"manufacturer":"Honda",
+	"model":"Civic",
+	"attributes":[
+		{"name":"color","value":"gray"},
+		{"name":"year","value":"2010"}
+	]}
+]
+
+```
+
+I used the [Jackson](http://jackson.codehaus.org/) library present in Play to convert the JSON payload to Java objects, and the [Cache API](https://www.playframework.com/documentation/2.3.0/JavaCache) to store the list of cars:
+
+
+``` java
+ObjectMapper mapper = new ObjectMapper();
+List<Car> cars = mapper.readValue(new File("cars.json"), new TypeReference<List<Car>>(){});
+Cache.set("cars", cars, 0);
+```
+
+An important point about the cache is that by default the data stored will expire after some time. To avoid this you need to specify 0 as the expiration time.
+
+I wanted the cache to be loaded only once at the application start. For that, I defined a [Global object](https://www.playframework.com/documentation/2.3.0/JavaGlobal) and its `onStart()` method to load the cache on it:
+
+
+``` java
+package global;
+
+/**
+ * Application global settings.
+ */
+public class Global extends GlobalSettings {
+
+	private static final String CARS_FILE = "cars.json";
+	
+	public void onStart(Application app) {
+        Logger.info("Application has started");
+        try {
+			loadCars();
+		} catch (Exception e) {
+			Logger.error("Could not load the " + CARS_FILE
+				+ " file. Error: " + e.getLocalizedMessage());
+		}
+    }
+
+	/**
+     * Loads in the cache the cars from the cars.json file.
+     * 
+     * @throws Exception
+     * 		If was not possible to load the cars, for whatever reason.
+     */
+    private void loadCars() throws Exception {
+    	Logger.info("Loading " + CARS_FILE);
+    	InputStream is = Global.class.getResourceAsStream(CARS_FILE);
+    	ObjectMapper mapper = new ObjectMapper();
+    	List<Car> cars = mapper.readValue(is, new TypeReference<List<Car>>(){});
+    	Cache.set("cars", cars, 0);
+    	Logger.info(cars.size() + " cars loaded.");
+    }
+}
+
+```
+
+Finally, to make this work, I had to change the `application.global` property in the `conf/application.conf` file with the package to my `Global` class, since I didn't create it in the route package (the `app` directory):
+
+
+``` bash
+# Global object class
+# ~~~~~
+# Define the Global object class for this application.
+# Default to Global in the root package.
+application.global=global.Global
+```
+
+## 4. GET operation
+
+Now, let's define an URL that returns in JSON the list of all cars in the cache. First, we need to define a new method `getCars()` in the `Application` class that is under `app/controllers`. The `Application` class is a [controller](https://www.playframework.com/documentation/2.3.0/JavaActions). A controller is a class that extends the `play.mvc.Controller` and groups several Java method that processes request parameters and produces a result to be sent to the client.
+
+The `Application.getCars()` method looks like this:
+
+``` java
+package controllers;
+
+/**
+ * Application controller.
+ */
+public class Application extends Controller {
+
+    /**
+     * Returns all registered cars.
+     * @return a list of cars.
+     */
+    public static Result getCars() {
+    	List<Car> cars = (List<Car>) Cache.get("cars");
+    	ObjectMapper mapper = new ObjectMapper();
+    	JsonNode node = mapper.convertValue(cars, JsonNode.class);
+    	return ok(node);
+    }
+}
+```
+The method returns a `play.mvc.Result` value, representing the HTTP response to be sent to the client. The `ok(node)` constructs a 200 OK response containing in the body the list of cars in JSON.
+
+The last step is to define the URL. This is done in the `conf/routes` file, in which you must specify in this order:
+
+1. the request type (GET, POST, DELETE, etc);
+2. the URL;
+3. and the method to be executed in the call.
+
+For example, I defined the `cars` URL just as below:
+
+``` bash
+GET		/cars			controllers.Application.getCars()
+```
+
+After this, you can access the list of cars at [http://localhost:9000/cars](http://localhost:9000/cars).
+
+## 5. GET with parameters
+
+It's also possible to define some parameters to be passed thought the URL. For example, let's change the `getCars()` method so we can retrieve cars based on their manufacturer and model:
+
+``` java
+	/**
+     * Returns all the registered cars, or the cars that match the specified
+     * manufacturer or model. 
+     * 
+     * @param manufacturer
+     * 			the car's manufacturer.
+     * @param model
+     * 			the car's model.
+     * @return a list of cars.
+     */
+    public static Result getCars(String manufacturer, String model) {
+    	List<Car> cars = (List<Car>) Cache.get("cars");
+    	ObjectMapper mapper = new ObjectMapper();
+    	JsonNode node;
+    	if (manufacturer == null && model == null) {
+        	node = mapper.convertValue(cars, JsonNode.class);
+    	} else {
+    		List<Car> result = new ArrayList<Car>();
+    		for (Car car : cars) {
+        		if ((manufacturer != null && car.getManufacturer().equals(manufacturer))
+        				|| (model != null && car.getModel().equals(model))) {
+        			result.add(car);
+        		}
+        	}
+        	node = mapper.convertValue(result, JsonNode.class);
+    	}
+    	return ok(node);
+    }
+```
+
+If the manufacturer and model are **null**, the method will return the list of all cars in the cache. So we must change the `routes` file to pass the manufacturer and model parameters to the `getCars()` method:
+
+``` bash
+GET		/cars			controllers.Application.getCars(manufacturer ?= null, model ?= null)
+```
+
+In the example above, if the manufacturer or model is not specified in the URL the default value **null** is used in the call.
+
+It's now possible to query the list of cars by manufacturer and/or model as shown below:
+
+- [http://localhost:9000/cars](http://localhost:9000/cars) : retrieves all cars;
+- [http://localhost:9000/cars?manufacturer=Honda](http://localhost:9000/cars) : retrieves all cars which manufacturer is "Honda";
+- [http://localhost:9000/cars?model=Civic](http://localhost:9000/cars) : retrieves all cars which model is "Civic";
+- [http://localhost:9000/cars?manufacturer=Honda&model=Civic](http://localhost:9000/cars) : retrieves all cars which manufacturer is "Honda" and model is "Civic".
+
+## 6. POST and PUT
+
+The last thing that I wanted to try was to create some POST and PUT operations to be possible to add new cars to the cache or update the existing ones. For this, I created two new methods in the `Application` class:
+
+
+``` java
+    /**
+     * Adds a new car to the cache.
+     * 
+     * @return HTTP 201, if the car was added to the cache.
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result addCar() throws JsonProcessingException {
+    	JsonNode node = request().body().asJson();
+    	ObjectMapper mapper = new ObjectMapper();
+        Car newCar = mapper.treeToValue(node, Car.class);
+        
+        // manufacturer and model can not be empty 
+        if (newCar.getManufacturer() == null || newCar.getModel() == null) {
+        	return badRequest("Invalid car data.");
+        }
+        
+        // check it a car with same manufacturer and model already exists
+        List<Car> cars = (List<Car>) Cache.get("cars");
+        for(Car car : cars) {
+        	if(car.getManufacturer().equals(newCar.getManufacturer())
+        			&& car.getModel().equals(newCar.getModel())) {
+        		return status(CONFLICT);
+        	}
+        }
+        
+        cars.add(newCar);
+        Cache.set("cars", cars, 0);
+    	return created();
+    }
+
+    /**
+     * Updates the car that matches the specified manufacturer and model. 
+     * 
+     * @param manufacturer
+     * 			the car's manufacturer.
+     * @param model
+     * 			the car's model.
+     * @return HTTP 200, if the car was updated.
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result updateCar(String manufacturer, String model)
+    		throws JsonProcessingException {
+    	JsonNode node = request().body().asJson();
+    	ObjectMapper mapper = new ObjectMapper();
+        Car newCar = mapper.treeToValue(node, Car.class);
+        
+        // manufacturer and model can not be empty
+        if (newCar.getManufacturer() == null || newCar.getModel() == null) {
+        	return badRequest("Invalid car data.");
+        }
+        
+        // check if the car exists
+        boolean found = false;
+        List<Car> cars = (List<Car>) Cache.get("cars");
+        for(Car car : cars) {
+        	if(car.getManufacturer().equals(newCar.getManufacturer())
+        			&& car.getModel().equals(newCar.getModel())) {
+        		cars.remove(car);
+        		found = true;
+        		break;
+        	}
+        }
+        
+        if(!found) {
+        	return notFound();
+        } else {
+        	cars.add(newCar);
+        	Cache.set("cars", cars, 0);
+        	return ok();
+        }
+    }
+```
+
+To parse the JSON payload you must annotate the method with the JSON [Body Parser](https://www.playframework.com/documentation/2.3.0/JavaBodyParsers) and call the `request().body().asJson()` to retrieve the `JsonNode` object. Next, you can use the `ObjectMapper` to convert from a `JsonNode` object to a `Car` object.
+
+The two methods perform some validations before try to add or update a car. They check if the model and manufacturer are not null, and if already exist or not a car in the cache with the same manufacturer and model.
+
+
+In the `routes` file the URLs were defined as follow:
+
+``` bash
+POST	/cars						controllers.Application.addCar()
+PUT		/cars/:manufacturer/:model	controllers.Application.updateCar(manufacturer, model)
+```
+
+So to add a new car to the cache you need to send a HTTP POST to [http://localhost:9000/cars](http://localhost:9000/cars) with the JSON payload that represents the new car in the HTTP body. Following is an example using [cURL](http://curl.haxx.se/):
+
+``` bash
+curl -H "Content-Type: application/json; charset=UTF-8" -X POST -d '{ "model": "Fox", "manufacturer": "Volkswagen", "attributes": [ { "name": "color", "value": "black" } ] }' http://localhost:9000/cars
+```
+
+And to update an existent car you must send a HTTP PUT to [http://localhost:9000/cars/\<manufacturer\>/\<model\>](http://localhost:9000/cars/manufacturer/model) with the car's new data in the HTTP body. The example below will update the car that we just created:
+
+``` bash
+curl -H "Content-Type: application/json; charset=UTF-8" -X PUT -d '{ "model": "Fox", "manufacturer": "Volkswagen", "attributes": [ { "name": "color", "value": "white" } ] }' http://localhost:9000/cars/Volkswagen/Fox
+```
+
+## 7. Source Code
+
+You can find the source code for this simple REST API in my GitHub: [https://github.com/marianafranco/rest-example](https://github.com/marianafranco/rest-example)

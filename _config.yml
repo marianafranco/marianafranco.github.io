@@ -5,7 +5,7 @@ description: My personal blog
 url: http://marianafranco.github.io
 
 markdown: redcarpet
-pygments: true
+highlighter: true
 excerpt_separator: <!--more-->
 
 # Permalinks

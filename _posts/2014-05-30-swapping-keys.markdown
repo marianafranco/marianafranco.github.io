@@ -11,7 +11,7 @@ Some weeks ago, my laptop `k` key just stopped to work. By chance, the `k` lette
 
 In Ubuntu, and all Linux systems using the X11 window system, the keyboard configuration is completely accessible in the form a customizable keymap that can be modified through `xmodmap`. So I decided to use the `xmodmap` utility to map the `AltGr` + `j` to the `k` key in my laptop. These are the instructions that I followed:
 
-### 1. Keymap
+## 1. Keymap
 
 Find the current keymap table by typing the following command:
 
@@ -39,7 +39,7 @@ Each keycode is followed by the keysym it is mapped to. Each keysym column in th
 Therefore, the above example indicates that the keycode 44 is mapped to the lowercase `j`, while the uppercase `J` is mapped to keycode 44 plus `Shift`, and so on.
 
 
-### 2. AltGr keycode
+## 2. AltGr keycode
 
 Looking to the keymap table I could not identify any keycode mapped to the `AltGr` key, so I used the `xev` command to find the keycode that correspond to the `AltGr` key in my laptop.
 
@@ -64,7 +64,7 @@ $ xmodmap -pke | grep 108
 keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol
 ```
 
-### 3. ISO\_Level3\_Shift vs Mode_switch
+## 3. ISO\_Level3\_Shift vs Mode_switch
 
 I tried to change the keycode 44 to map the `AltGr` + `j` to the letter `k` through the following command:
 
@@ -94,7 +94,7 @@ After google a lot, the best explanation that I found was [this one](http://unix
 So take care before change your `AltGr` keymap. In my case, I did not notice any change in the keyboard operation and all keys are working correctly.
 
 
-### 4. Activating the .Xmodmap at startup
+## 4. Activating the .Xmodmap at startup
 
 After restart the laptop, I noticed that my changes have not take effect. If you want your xmodmap changes to run each time you log in, you need to create a file called ~/.Xmodmap with your modifications to the default keymap. For example, in my case the ~/.Xmodmap file looks like this:
 
