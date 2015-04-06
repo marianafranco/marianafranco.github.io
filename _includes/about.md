@@ -2,7 +2,7 @@
 
 I'm a remote Software Engineer at IBM Brazil Software Lab, working in the development of the [IBM Service Engage Collaborative Operations](https://www.ibmserviceengage.com/collaborative-ops/learn).
 
-I have an M.Sc. in Computer Engineering from [Escola Politécnica da USP](http://www.poli.usp.br/), Brazil, and my research areas were Multi-Agent Systems and AI.
+I have a M.Sc. in Computer Engineering from [Escola Politécnica da USP](http://www.poli.usp.br/), Brazil, and my research areas were Multi-Agent Systems and AI.
 
 Currently, I live in [Florianópolis](http://en.wikipedia.org/wiki/Florian%C3%B3polis) with my boyfriend and in my free time I like to play video games, to read technical and non technical books, to hack some code, watch TV series, and to travel.
 
