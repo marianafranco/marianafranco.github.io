@@ -90,16 +90,17 @@ time+p,article header+p{
 a{
 	text-decoration:none;
 	font-weight:600;
-	color:#f77;
+	/*color:#f77;*/
+	color:#444;
 	-webkit-transition:color 0.25s;
 	-moz-transition:color 0.25s;
 	-o-transition:color 0.25s;
 	transition:color 0.25s
 }
 
-a:visited{
+/*a:visited{
 	color:#b0b0b0
-}
+}*/
 
 a:focus{
 	color:#f77
@@ -117,9 +118,9 @@ a.article-link{
 	color:#444
 }
 
-a.article-link:visited{
+/*a.article-link:visited{
 	color:#444
-}
+}*/
 
 a.article-link:focus{
 	color:#f77
@@ -1506,5 +1507,3 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 .icon-weibo:before{content:"\f18a"}
 
 .icon-renren:before{content:"\f18b"}
-
-
