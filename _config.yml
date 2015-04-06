@@ -5,13 +5,13 @@ description: My personal blog
 url: http://marianafranco.github.io
 
 markdown: redcarpet
-highlighter: true
+#highlighter: true
 excerpt_separator: <!--more-->
 
 # Permalinks
 permalink: pretty
 
 # This is the list of pages to incldue in the header of the website.
-pages_list:       
+pages_list:
   About: '/about/'
   Projects: '/projects/'
