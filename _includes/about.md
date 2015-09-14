@@ -1,6 +1,6 @@
 ## About
 
-I'm a remote Software Engineer at IBM Brazil Software Lab, working in the development of the [IBM Service Engage Collaborative Operations](https://www.ibmserviceengage.com/collaborative-ops/learn).
+I'm a remote Software Engineer at IBM Brazil Software Lab, working in the development of new services for [Bluemix](https://www.bluemix.net/).
 
 I have a M.Sc. in Computer Engineering from [Escola Politécnica da USP](http://www.poli.usp.br/), Brazil, and my research areas were Multi-Agent Systems and AI.
 
