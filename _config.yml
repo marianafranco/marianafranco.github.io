@@ -4,9 +4,7 @@ subname: Software Engineer
 description: My personal blog
 url: http://marianafranco.github.io
 
-markdown: redcarpet
-redcarpet:
-  extensions: ["strikethrough"]
+markdown: kramdown
 #highlighter: true
 excerpt_separator: <!--more-->
 
