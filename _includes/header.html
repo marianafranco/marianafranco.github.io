@@ -49,15 +49,17 @@
     <div class="header-master">
         <div class="container">
             <!-- <img class="blog-logo" src="http://www.gravatar.com/avatar/67a454a70f7c427be5875b5626e1f727.png?s=150"> -->
-            <img class="blog-logo" src="/img/leia.png">
-            <div class="blog-name">
-                <div class="blog-title">
-                    <a href="/">{{ site.name }}</a>
-                </div>
-                <div class="blog-sub">
-                    {{ site.subname }}
-                </div>
-            </div>
+            <a href="/">
+              <img class="blog-logo" src="/img/leia.png">
+              <div class="blog-name">
+                  <div class="blog-title">
+                      {{ site.name }}
+                  </div>
+                  <div class="blog-sub">
+                      {{ site.subname }}
+                  </div>
+              </div>
+            </a>
             <div class="blog-pages">
                   {% for page in site.pages_list %}
                       <a href="{{ page[1]  }}">{{ page[0] }}</a>
