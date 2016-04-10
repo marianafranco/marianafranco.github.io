@@ -1,10 +1,10 @@
 ## About
 
-I'm a remote Software Engineer at IBM Brazil Software Lab, working in the development of new services for [Bluemix](https://www.bluemix.net/).
+I'm a Brazilian hacker girl living in Munich, the Beer Capital of the World :-)
 
-I have a M.Sc. in Computer Engineering from [Escola Politécnica da USP](http://www.poli.usp.br/), Brazil, and my research areas were Multi-Agent Systems and AI.
+I have a Master of Science in Computer Engineering from [Escola Politécnica da USP](http://www.poli.usp.br/), a top University in Brazil, and my research areas were Multi-Agent Systems and AI.
 
-Currently, I live in [Florianópolis](http://en.wikipedia.org/wiki/Florian%C3%B3polis) with my boyfriend and in my free time I like to play video games, to read technical and non technical books, to hack some code, watch TV series, and to travel.
+Currently, I'm working as a remote Software Engineer for [Rainforest QA](www.rainforestqa.com), and when I'm not hacking some code or ~~drinking beer~~ learning German, I like to travel, play video games, read technical and non technical books, watch TV series and to support my favorite soccer team, the <i>Timão!</i>
 
 
 

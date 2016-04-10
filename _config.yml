@@ -5,6 +5,8 @@ description: My personal blog
 url: http://marianafranco.github.io
 
 markdown: redcarpet
+redcarpet:
+  extensions: ["strikethrough"]
 #highlighter: true
 excerpt_separator: <!--more-->
 
