@@ -2,56 +2,34 @@
 layout: default
 ---
 
-<article class="container">
-    <!-- Facebook -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=384085541705339";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-    <!-- Facebook end-->
-    <header>
-        <hgroup>
-            <h1>{{ page.title}}</h1>
-        </hgroup>
-        <time datetime="{{ page.date | date: '%Y-%m-%d' }}"><i class="icon-calendar-empty"></i>{{ page.date | date: "%A, %-d. %B %Y" }}</time>
-    </header>
-    {{ content | replace: '-&gt;', '<i class="icon-long-arrow-right"></i>' | replace: '&lt;-', '<i class="icon-long-arrow-left"></i>' | replace: '&gt;', '<i class="icon-angle-right"></i>' | replace: '&lt;', '<i class="icon-angle-left"></i>' | replace: '^2', '&sup2;' }}
-    <footer>
-        <div style="float:left">
-            <ul class="tags">
-                {% for tag in page.tags %}
-                <li class="tag">{{ tag }}</li>
-                {% endfor %}
-            </ul>
+<article class="post">
+  <!-- Facebook -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=384085541705339";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <!-- Facebook end-->
+  <h1 class="post-title">{{ page.title }}</h1>
+  <time datetime="{{ page.date | date_to_xmlschema }}" class="post-date">{{ page.date | date_to_string }}</time>
+  {{ content }}
+
+  <footer>
+    <div style="height:34px;margin-bottom: 10px;">
+        <!-- Twitter -->
+        <div style="width:85px; height:20px; float:left; padding-top:13px">
+            <a href="https://twitter.com/share" class="twitter-share-button" data-via="marianafranco">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         </div>
-        <div style="float:right; height:34px;">
-            <!-- Twitter -->
-            <div style="width:85px; height:20px; float:left; padding-top:13px">
-                <a href="https://twitter.com/share" class="twitter-share-button" data-via="marianafranco">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-            </div>
-            <!-- Google + -->
-            <div style="width:65px; height:20px; float:left; padding-top:13px">
-                <g:plusone size="medium"></g:plusone>
-                <script type="text/javascript">
-                  (function() {
-                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                    po.src = 'https://apis.google.com/js/plusone.js';
-                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                  })();
-                </script>    
-            </div>
-            
-            <div style="float:left; height:20px; padding-top:1px">
-                <!-- Facebook -->
-                <div class="fb-like" data-href="{{ post.url }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false" style="border:none; height:20px;"></div>    
-            </div>
+
+        <div style="float:left; height:20px; padding-top:14px">
+            <!-- Facebook -->
+            <div class="fb-like" data-href="{{ post.url }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false" style="border:none; height:20px;"></div>
         </div>
-    </footer>
+    </div>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -66,4 +44,21 @@ layout: default
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </footer>
 </article>
+
+<!-- {% if site.related_posts != empty %}
+<aside class="related">
+  <h3>Related posts</h3>
+  <ul class="related-posts">
+    {% for post in site.related_posts limit:3 %}
+      <li>
+        <a href="{{ site.baseurl }}{{ post.url }}">
+          {{ post.title }}
+          <small><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date_to_string }}</time></small>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</aside>
+{% endif %} -->

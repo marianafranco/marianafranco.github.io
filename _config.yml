@@ -1,17 +1,38 @@
-name: Mariana Franco
-subname: Software Engineer
-
-description: My personal blog
-url: http://marianafranco.github.io
-
-markdown: kramdown
-#highlighter: true
-excerpt_separator: <!--more-->
-
 # Permalinks
-permalink: pretty
+permalink:           pretty
 
-# This is the list of pages to incldue in the header of the website.
+# Setup
+title:               Mariana Franco
+tagline:             Software Engineer
+url:                 http://marianafranco.github.io
+paginate:            1
+baseurl:             ""
+
+# Assets
+#
+# We specify the directory for Jekyll so we can use @imports.
+sass:
+  sass_dir:          _sass
+  style:            :compressed
+
+# About/contact
+author:
+  name:              Mariana Ramos Franco
+  url:               http://marianafranco.github.io
+
+# Custom vars
+version:             2.0.0
+github:
+  repo:              https://github.com/marianafranco/marianafranco.github.io
+
+analytics_id:       UA-48776353-1
+
+# This is the list of pages to include in the header of the website.
 pages_list:
   About: '/about/'
   Projects: '/projects/'
+
+# Gems
+gems:
+  - jekyll-paginate
+  - jekyll-gist

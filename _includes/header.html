@@ -1,70 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>{{ page.title }} | {{ site.name }}</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="cleartype" content="on">
-
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta name="author" content="Mariana Franco">
-    <meta name="description" lang="en"
-          content="Mariana Franco is a software developer based in Florianópolis, Brazil">
-
-    <!-- facebook insights -->
-    <meta property="fb:admins" content="1324131986" />
-
-    <!-- placed in head for exact time measurement in google analytics -->
-    <script>
-  		(function(i,s,o,g,r,a,m){
-  			i['GoogleAnalyticsObject']=r;
-  			i[r]=i[r]||function(){
-  				(i[r].q=i[r].q||[]).push(arguments)
-  			},i[r].l=1*new Date();
-  			a=s.createElement(o),m=s.getElementsByTagName(o)[0];
-  			a.async=1;
-  			a.src=g;
-  			m.parentNode.insertBefore(a,m)
-  		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  		ga('create', 'UA-48776353-1', 'marianafranco.github.io');
-  		ga('send', 'pageview');
-
-	</script>
-
-    <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css"/>
-    <link href="/css/animate-custom.css" media="screen, projection" rel="stylesheet" type="text/css"/>
-    <link href="/css/print.css" media="print" rel="stylesheet" type="text/css"/>
-    <!--[if lt IE 8]>
-    <link href="/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css"/>
-    <![endif]-->
-
-    <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">
-</head>
-<body>
-<header>
-    <div class="header-master">
-        <div class="container">
-            <!-- <img class="blog-logo" src="http://www.gravatar.com/avatar/67a454a70f7c427be5875b5626e1f727.png?s=150"> -->
-            <a href="/">
-              <img class="blog-logo" src="/img/leia.png">
-              <div class="blog-name">
-                  <div class="blog-title">
-                      {{ site.name }}
-                  </div>
-                  <div class="blog-sub">
-                      {{ site.subname }}
-                  </div>
-              </div>
-            </a>
-            <div class="blog-pages">
-                  {% for page in site.pages_list %}
-                      <a href="{{ page[1]  }}">{{ page[0] }}</a>
-                  {% endfor %}
-            </div>
-        </div>
+<header class="masthead">
+  <div class="container">
+    <a href="/">
+      <img class="masthead-logo" src="/public/leia-icon.png">
+      <div class="masthead-block masthead-title">
+          <div>
+              <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+          </div>
+          <div>
+              <small>{{ site.tagline }}</small>
+          </div>
+      </div>
+    </a>
+    <div class="masthead-block masthead-pages">
+          {% for page in site.pages_list %}
+              <a href="{{ page[1]  }}">{{ page[0] }}</a>
+          {% endfor %}
     </div>
+  </div>
 </header>

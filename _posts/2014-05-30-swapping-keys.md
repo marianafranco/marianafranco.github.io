@@ -15,7 +15,7 @@ In Ubuntu, and all Linux systems using the X11 window system, the keyboard confi
 
 Find the current keymap table by typing the following command:
 
-``` bash
+{% highlight shell %}
 $ xmodmap -pke
 
 keycode  42 = g G g G
@@ -24,7 +24,7 @@ keycode  44 = j J j J
 keycode  45 = k K k K
 keycode  46 = l L l L
 
-```
+{% endhighlight %}
 Each keycode is followed by the keysym it is mapped to. Each keysym column in the table corresponds to a particular combination of modifier keys:
 
 ```
@@ -47,39 +47,39 @@ The `xev` is a program that displays X events. For any key that you hit, the con
 
 This was what I got when pressed the `AltGr` key in my laptop:
 
-``` bash
+{% highlight shell %}
 $ xev
 
 KeyRelease event, serial 40, synthetic NO, window 0x4200001,
     root 0x90, subw 0x0, time 41801531, (829,465), root:(879,517),
     state 0x80, keycode 108 (keysym 0xfe03, ISO_Level3_Shift), same_screen YES,
-    XLookupString gives 0 bytes: 
+    XLookupString gives 0 bytes:
     XFilterEvent returns: False
-```
+{% endhighlight %}
 So the `AltGr` key on my keyboard has keycode 108 and it's mapped to the `ISO_Level3_Shift`:
 
-``` bash
+{% highlight shell %}
 $ xmodmap -pke | grep 108
 
 keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol
-```
+{% endhighlight %}
 
 ## 3. ISO\_Level3\_Shift vs Mode_switch
 
 I tried to change the keycode 44 to map the `AltGr` + `j` to the letter `k` through the following command:
 
-``` bash
+{% highlight shell %}
 $ xmodmap -e "keycode 44 = j J j J k k"
-```
+{% endhighlight %}
 
 But this did not work. In fact, I noticed that there is no keycode in my keymap where the 5th and 6th column of the keysym are used. That is, there is no value mapped to combinations that use the `AltGr` modifier.
 
 I also did not find any keycode mapped to the `Mode_switch` modifier. Then I tried to change the `AltGr` key to be mapped to the `Mode_switch` instead of the `ISO_Level3_Shift`, and to change the keycode 44 to map the `Mode_switch` + `j` to `k`:
 
-``` bash
+{% highlight shell %}
 $ xmodmap -e "keycode 108 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch"
 $ xmodmap -e "keycode 44 = j J k K"
-```
+{% endhighlight %}
 
 This worked, and now in my laptop the `AltGr` + `j` outputs `k`, while `AltGr` + `Shift` + `j` generates the uppercase `K`.
 
@@ -98,16 +98,15 @@ So take care before change your `AltGr` keymap. In my case, I did not notice any
 
 After restart the laptop, I noticed that my changes have not take effect. If you want your xmodmap changes to run each time you log in, you need to create a file called ~/.Xmodmap with your modifications to the default keymap. For example, in my case the ~/.Xmodmap file looks like this:
 
-``` bash
+{% highlight shell %}
 keycode 108 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch
 keycode 44 = j J k K
-```
+{% endhighlight %}
 
 You can check if you ~/.Xmodmap file is correct by calling:
 
-``` bash
+{% highlight shell %}
 $ xmodmap ~/.Xmodmap
-```
+{% endhighlight %}
 
 And that’s it! :)
-

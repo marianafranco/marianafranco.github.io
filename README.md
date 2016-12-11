@@ -5,4 +5,4 @@ This is my personal site, where I intend to share my projects and work experienc
 
 This site:
 - Based on [Jekyll](http://jekyllrb.com);
-- Layout and styles copied from [Martin Seeler](http://martinseeler.github.io)'s site;
+- Theme [Poole](https://github.com/poole/poole);
