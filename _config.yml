@@ -5,7 +5,7 @@ permalink:           pretty
 title:               Mariana Franco
 tagline:             Software Engineer
 url:                 http://marianafranco.github.io
-paginate:            1
+paginate:            5
 baseurl:             ""
 
 # Assets
@@ -34,3 +34,4 @@ pages_list:
 gems:
   - jekyll-paginate
   - jekyll-gist
+  - jekyll-sitemap
