@@ -11,9 +11,9 @@ baseurl:             ""
 # Assets
 #
 # We specify the directory for Jekyll so we can use @imports.
-sass:
-  sass_dir:          _sass
-  style:            :compressed
+# sass:
+#   sass_dir:         _assets
+#   style:            :compressed
 
 # About/contact
 author:
@@ -30,8 +30,17 @@ pages_list:
   About: '/about/'
   Projects: '/projects/'
 
+assets:
+  compress:
+    css: true
+  js_compressor:  uglifier
+  css_compressor: scss
+  features:
+    liquid: true
+
 # Gems
 gems:
   - jekyll-paginate
   - jekyll-gist
   - jekyll-sitemap
+  - jekyll-assets
