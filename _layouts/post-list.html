@@ -12,8 +12,7 @@ layout: default
     </h1>
 
     <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date_to_string }}</time>
-    {{ post.excerpt | replace: '-&gt;', '<i class="icon-long-arrow-right"></i>' | replace: '&lt;-', '<i class="icon-long-arrow-left"></i>' | replace: '&gt;', '<i class="icon-angle-right"></i>' | replace: '&lt;', '<i class="icon-angle-left"></i>' | replace: '^2', '&sup2;' }}
-    <a class="article-link" href="{{ post.url }}">- - - More - - -</a>
+    {{ post.excerpt | truncatewords: 50  }}
   </article>
   {% endfor %}
 </div>
