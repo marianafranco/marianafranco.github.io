@@ -31,7 +31,7 @@ pages_list:
   Projects: '/projects/'
 
 # Gems
-gems:
+plugins:
   - jekyll-paginate
   - jekyll-gist
   - jekyll-sitemap
